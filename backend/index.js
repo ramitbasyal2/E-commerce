@@ -1,4 +1,4 @@
-const PORT = 4000;
+
 import express from "express";
 const app = express();
 import "dotenv/config";
@@ -11,13 +11,32 @@ import Product from "./models/productModel.js";
 import path from "path";
 import { userLogin, userSignup } from "./controllers/userController.js";
 import User from "./models/userModel.js";
+import cookieParser from "cookie-parser";
+import authRouter from "./routes/auth.route.js";
+import userRouter from "./routes/user.router.js";
 // import User from "./models/userModel.js";
 
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser())
+app.use(cors(
+  {
+     origin: "http://localhost:5173",
+     credentials:true
+  }
+));
+
+const PORT = process.env.PORT || 8000;
 
 //Connecting with mongoDb Database
 await ConnectDB();
+
+app.get('/', (req,res)=>{
+  res.send("Server is live")
+})
+
+//  routes
+app.use('/api/auth', authRouter)
+app.use('/api/user',userRouter)
 
 /* ================= IMAGE STORAGE ENGINE ================= */
 

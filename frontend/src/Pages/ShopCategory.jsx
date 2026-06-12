@@ -8,17 +8,18 @@ const ShopCategory = (props) => {
   const { all_products } = useContext(ShopContext);
 
   return (
-    <div className="shop-category">
+    <div className="shop-category bg-gray-100 py-4">
       <img className="shopcategory-banner" src={props.banner} alt="" />
       <div className="Shopcategory-indexSort">
         <p>
           <span>Showing 1-12</span> out of 36 products
         </p>
-        <div className="shopcategory-sort">
+        <div className="shopcategory-sort mb-8">
           Sort by <img src={dropdowm_icon} alt="" />
         </div>
       </div>
-      <div className="shopcategory-products">
+      <div className="max-w-7xl mx-auto ">
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 place-items-center">
         {all_products?.map((item, i) => {
           if (props.category === item.category) {
             return (
@@ -36,6 +37,7 @@ const ShopCategory = (props) => {
           } else {
             return null;
           }})}
+      </div>
       </div>
       <div className="shopcategory-loadmore">
            <p>Show More</p>

@@ -3,7 +3,7 @@ import "./DescriptionBox.css";
 
 const DescriptionBox = () => {
   return (
-    <div className="descriptionbox">
+    <div className="w-full mt-6 px-2 md:px-6">
       <div className="descriptionbox-navigator">
         <div className="descriptionbox-nav-box">Description</div>
         <div className="descriptionbox-nav-box fade">Reviews (122)</div>

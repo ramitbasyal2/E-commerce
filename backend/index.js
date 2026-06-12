@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cookieParser())
 app.use(cors(
   {
-     origin: "http://localhost:5173",
+     origin: "https://e-commerce-1-x8dr.onrender.com",
      credentials:true
   }
 ));

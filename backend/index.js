@@ -51,7 +51,7 @@ const upload = multer({ storage });
 
 /* ================= ADD PRODUCT ================= */
 
-app.post("/addproduct", async (req, res) => {
+app.post("/api/addproduct", async (req, res) => {
   try {
     // Get last product
     const lastProduct = await Product.findOne().sort({ id: -1 });
@@ -85,7 +85,7 @@ app.post("/addproduct", async (req, res) => {
 
 /* ================= REMOVE PRODUCT ================= */
 
-app.post("/removeproduct", async (req, res) => {
+app.post("/api/removeproduct", async (req, res) => {
   try {
     await Product.findOneAndDelete({ id: req.body.id });
 
@@ -105,27 +105,27 @@ app.post("/removeproduct", async (req, res) => {
 
 app.use("/images", express.static("upload/images"));
 
-app.post("/upload", upload.single("product"), (req, res) => {
+app.post("/api/upload", upload.single("product"), (req, res) => {
   res.json({
     success: 1,
-    image_url: `http://localhost:4000/images/${req.file.filename}`,
+    image_url: `${process.env.BACKEND_URL}/images/${req.file.filename}`,
   });
 });
 
 //creating API for getting all produucts
-app.get('/allproducts', async (req,res)=>{
+app.get('/api/allproducts', async (req,res)=>{
   let products = await Product.find({});
   console.log("All Products Fetched");
    res.send(products)
 })
 
 // Creating api for user signUP/Login
-app.post('/signup',express.json(), userSignup);
-app.post('/login',express.json(), userLogin);
+app.post('/api/signup',express.json(), userSignup);
+app.post('/api/login',express.json(), userLogin);
 
 
 // Creating Endpoint for newCollection data
- app.get('/newcollections', async (req,res)=>{
+ app.get('/api/newcollections', async (req,res)=>{
     let products = await Product.find({});
     let newcollection = products.slice(1).slice(-8);
     console.log("NewCollecton fetched");
@@ -134,7 +134,7 @@ app.post('/login',express.json(), userLogin);
  });
 
  //creating endPoint for popular in women section
- app.get('/popularinwomen', async (req,res)=>{
+ app.get('/api/popularinwomen', async (req,res)=>{
       let products = await Product.find({category: 'women'});
       let popular_in_women = products.slice(0,4);
       console.log("Popular in Women fetched");
@@ -162,7 +162,7 @@ app.post('/login',express.json(), userLogin);
      }
  }
  //creating Endpoint for adding products in cartData
- app.post('/addtocart',fetchUser, async (req,res)=>{
+ app.post('/api/addtocart',fetchUser, async (req,res)=>{
       console.log("Added", req.body.itemId);
      let userData = await User.findOne({_id:req.user.id});
      userData.cartData[req.body.itemId] += 1;
@@ -172,7 +172,7 @@ app.post('/login',express.json(), userLogin);
 
  // Creating API Endpoint for removing the data from cartdata   
 
-  app.post('/removefromcart',fetchUser, async (req,res)=>{
+  app.post('/api/removefromcart',fetchUser, async (req,res)=>{
     console.log("removed", req.body.itemId);
      let userData = await User.findOne({_id:req.user.id});
      if( userData.cartData[req.body.itemId]>0)
@@ -189,7 +189,7 @@ app.post('/login',express.json(), userLogin);
    
 // })
 // Creating endpoint to get cartData
-app.post('/getcart', fetchUser, async (req, res) => {
+app.post('/api/getcart', fetchUser, async (req, res) => {
   try {
     console.log("GetUser");
 

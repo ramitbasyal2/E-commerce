@@ -8,7 +8,7 @@ const Popular = () => {
 
   // fetching all popular in women data from api
   useEffect(()=>{
-    fetch('http://localhost:4000/popularinwomen')
+    fetch(`${import.meta.env.VITE_SERVER_URL}/popularinwomen`)
     .then((response)=> response.json())
     .then((data)=> setPopularProducts(data))
   },[])

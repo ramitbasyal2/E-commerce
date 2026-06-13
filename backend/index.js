@@ -14,6 +14,7 @@ import User from "./models/userModel.js";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.route.js";
 import userRouter from "./routes/user.router.js";
+import uploadOnCloudinary from "./config/cloudinary.js";
 // import User from "./models/userModel.js";
 
 app.use(express.json());
@@ -24,6 +25,8 @@ app.use(cors(
      credentials:true
   }
 ));
+
+
 
 const PORT = process.env.PORT || 8000;
 
@@ -105,12 +108,17 @@ app.post("/api/removeproduct", async (req, res) => {
 
 app.use("/images", express.static("upload/images"));
 
-app.post("/api/upload", upload.single("product"), (req, res) => {
-  res.json({
-    success: 1,
-    image_url: `${process.env.BACKEND_URL}/images/${req.file.filename}`,
-  });
-});
+app.post('/api/upload', upload.single("product"), async (req,res) => {
+     try {
+         const image_url = await uploadOnCloudinary(req.file.path);
+         res.json({
+            success:1,
+            image_url: image_url
+         });
+     } catch (error) {
+       res.status(500).json({success: 0, message: error.message})
+     }
+} )
 
 //creating API for getting all produucts
 app.get('/api/allproducts', async (req,res)=>{

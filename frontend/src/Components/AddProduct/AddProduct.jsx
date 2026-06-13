@@ -38,7 +38,7 @@ const AddProduct = () => {
     let formData = new FormData();
     formData.append('product', image);
 
-    await fetch(`${import.meta.env.VITE_SERVER_URL}/upload`,{
+    await fetch(`${import.meta.env.VITE_SERVER_URL}/api/upload`,{
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -52,7 +52,7 @@ const AddProduct = () => {
         navigate('/')
 
         
-    fetch(`${import.meta.env.VITE_SERVER_URL}/addproduct`,{
+    fetch(`${import.meta.env.VITE_SERVER_URL}/api/addproduct`,{
             method: 'POST',
                 headers:{
                     Accept:'application/json',

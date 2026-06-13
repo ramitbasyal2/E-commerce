@@ -9,7 +9,7 @@ const NewCollections = () => {
 
  //fetchhing data from api
   useEffect(()=>{
-        fetch(`${import.meta.env.VITE_SERVER_URL}/newcollections`)
+        fetch(`${import.meta.env.VITE_SERVER_URL}/api/newcollections`)
         .then((response)=> response.json())
         .then((data)=> setNew_Collection(data))
   },[])
